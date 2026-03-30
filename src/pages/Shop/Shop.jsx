@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import styles from './Shop.module.css';
 
 const Shop = ({ addToCart }) => {
     const [products, setProducts] = useState([]);
@@ -18,10 +19,13 @@ const Shop = ({ addToCart }) => {
     if (loading) return <p>Loading products...</p>;
 
     return (
-        <div>
-        {products.map((product) => (
-            <ProductCard key={product.id} product={product} addToCart={addToCart} />
-        ))}
+        <div className={styles.shop}>
+            <h2>Products</h2>
+            <div className={styles.grid}>
+                {products.map((product) => (
+                    <ProductCard key={product.id} product={product} addToCart={addToCart} />
+                ))}
+            </div>
         </div>
     );
 };

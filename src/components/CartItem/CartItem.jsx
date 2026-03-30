@@ -1,28 +1,27 @@
 import PropTypes from 'prop-types';
+import styles from './CartItem.module.css';
 
-const CartItems = ({ item, updateQuantity, removeFromCart }) => {
+const CartItem = ({ item, updateQuantity, removeFromCart }) => {
     const { product, quantity } = item;
 
     return (
-        <div>
-            <p>{product.title}</p>
-            <p>${product.price}</p>
-
+        <div className={styles.item}>
+        <div className={styles.info}>
+            <p className={styles.title}>{product.title}</p>
+            <p className={styles.price}>${product.price}</p>
+        </div>
+        <div className={styles.controls}>
             <button onClick={() => {
-                if (quantity - 1 === 0) {
-                    removeFromCart(product.id);
-                } else {
-                    updateQuantity(product.id, quantity - 1);
-                }
+            if (quantity - 1 === 0) removeFromCart(product.id);
+            else updateQuantity(product.id, quantity - 1);
             }}>-</button>
-
-            <span>{quantity}</span>
-
+            <span className={styles.quantity}>{quantity}</span>
             <button onClick={() => updateQuantity(product.id, quantity + 1)}>+</button>
-
-            <button onClick={() => removeFromCart(product.id)}>Remove</button>
-
-            <p>Subtotle: ${(product.price * quantity).toFixed(2)}</p>
+        </div>
+        <p className={styles.subtotal}>${(product.price * quantity).toFixed(2)}</p>
+        <button className={styles.removeBtn} onClick={() => removeFromCart(product.id)}>
+            Remove
+        </button>
         </div>
     );
 };
@@ -30,9 +29,9 @@ const CartItems = ({ item, updateQuantity, removeFromCart }) => {
 CartItem.propTypes = {
     item: PropTypes.shape({
         product: PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            title: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
         }).isRequired,
         quantity: PropTypes.number.isRequired,
     }).isRequired,
